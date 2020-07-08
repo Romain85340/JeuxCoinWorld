@@ -88,7 +88,7 @@ function Spider(game, x, y) {
     // anchor
     this.anchor.set(0.5);
     // animation
-    this.animations.add('crawl', [5, 4, 2, 1], 8, true); // 8fps, looped
+    this.animations.add('crawl', [5, 4, 3, 2], 8, true); // 8fps, looped
     this.animations.add('die', [4, 0, 4, 0, 4, 0, 1, 1, 1, 1, 1, 1], 12);
     this.animations.play('crawl');
 
@@ -141,7 +141,8 @@ PlayState.init = function (data) {
     this.keys = this.game.input.keyboard.addKeys({
         left: Phaser.KeyCode.LEFT,
         right: Phaser.KeyCode.RIGHT,
-        up: Phaser.KeyCode.UP
+        up: Phaser.KeyCode.UP,
+        pause: Phaser.KeyCode.P
     });
 
     this.keys.up.onDown.add(function () {
@@ -150,11 +151,26 @@ PlayState.init = function (data) {
             this.sfx.jump.play();
         }
     }, this);
+
+    this.keys.pause.onDown.add(function () {
+        
+        if (this.game.paused === false) {
+            this.game.paused = true
+    
+            
+        } else if (this.game.paused === true) {
+            this.game.paused = false
+            
+       }
+       console.log(this.game.paused);
+     }, this);
+    
     this.coinPickupCount = 0;
     this.hasKey = false;
 
     this.level = (data.level || 0) % LEVEL_COUNT;
 };
+
 
 PlayState.preload = function () {
     // json position
