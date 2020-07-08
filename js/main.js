@@ -15,9 +15,9 @@ function Hero(game, x, y) {
 
 
     this.animations.add('stop', [0]);
-    this.animations.add('run', [1, 2], 8, true); // 8fps looped
-    this.animations.add('jump', [3]);
-    this.animations.add('fall', [4]);
+    this.animations.add('run', [0, 1, 2, 3], 8, true); // 8fps looped
+    this.animations.add('jump', [4]);
+    this.animations.add('fall', [5]);
 }
 
 // inherit from Phaser.Sprite
@@ -88,8 +88,8 @@ function Spider(game, x, y) {
     // anchor
     this.anchor.set(0.5);
     // animation
-    this.animations.add('crawl', [0, 1, 2], 8, true); // 8fps, looped
-    this.animations.add('die', [0, 4, 0, 4, 0, 4, 3, 3, 3, 3, 3, 3], 12);
+    this.animations.add('crawl', [5, 4, 2, 1], 8, true); // 8fps, looped
+    this.animations.add('die', [4, 0, 4, 0, 4, 0, 1, 1, 1, 1, 1, 1], 12);
     this.animations.play('crawl');
 
     // physic properties
@@ -108,9 +108,11 @@ Spider.prototype.update = function () {
     // check against walls and reverse direction if necessary
     if (this.body.touching.right || this.body.blocked.right) {
         this.body.velocity.x = -Spider.SPEED; // turn left
+        this.scale.x = -1;
     }
     else if (this.body.touching.left || this.body.blocked.left) {
         this.body.velocity.x = Spider.SPEED; // turn right
+        this.scale.x = 1;
     }
 };
 
@@ -166,7 +168,7 @@ PlayState.preload = function () {
     this.game.load.image('grass:4x1', 'images/grass_4x1.png');
     this.game.load.image('grass:2x1', 'images/grass_2x1.png');
     this.game.load.image('grass:1x1', 'images/grass_1x1.png');
-    this.game.load.spritesheet('hero', 'images/hero.png', 36, 42);
+    this.game.load.spritesheet('hero', 'images/hero-complet.png', 34, 42);
     this.game.load.image('invisible-wall', 'images/invisible_wall.png');
     this.game.load.image('icon:coin', 'images/coin_icon.png');
     this.game.load.image('font:numbers', 'images/numbers.png');
@@ -174,7 +176,7 @@ PlayState.preload = function () {
     this.game.load.image('key', 'images/key.png');
     this.game.load.spritesheet('icon:key', 'images/key_icon.png', 34, 30);
     this.game.load.spritesheet('coin', 'images/coin_animated.png', 22, 22);
-    this.game.load.spritesheet('spider', 'images/spider.png', 42, 32);
+    this.game.load.spritesheet('spider', 'images/Ennemy.png', 42, 40);
     // audio
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
